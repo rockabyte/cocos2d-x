@@ -23,6 +23,8 @@
 #include "CCPhysicsSprite.h"
 #include "support/CCPointExtension.h"
 
+#define CC_ENABLE_BOX2D_INTEGRATION 1
+
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include "chipmunk.h"
 #elif CC_ENABLE_BOX2D_INTEGRATION

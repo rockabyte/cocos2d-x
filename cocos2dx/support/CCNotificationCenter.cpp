@@ -117,6 +117,7 @@ int CCNotificationCenter::removeAllObservers(CCObject *target)
 {
     CCObject *obj = NULL;
     CCArray *toRemove = CCArray::create();
+	toRemove->retain();
 
     CCARRAY_FOREACH(m_observers, obj)
     {
@@ -131,7 +132,10 @@ int CCNotificationCenter::removeAllObservers(CCObject *target)
     }
 
     m_observers->removeObjectsInArray(toRemove);
-    return toRemove->count();
+	int r = toRemove->count();
+	toRemove->autorelease();
+	
+    return r;
 }
 
 void CCNotificationCenter::registerScriptObserver( CCObject *target, int handler,const char* name)
@@ -168,6 +172,7 @@ void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char*
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 {
     CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
+	ObserversCopy->retain();
     ObserversCopy->addObjectsFromArray(m_observers);
     CCObject* obj = NULL;
     CCARRAY_FOREACH(ObserversCopy, obj)
@@ -189,6 +194,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
             }
         }
     }
+	ObserversCopy->autorelease();
 }
 
 void CCNotificationCenter::postNotification(const char *name)
