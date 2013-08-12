@@ -568,12 +568,12 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
         if ( textDefinition->m_stroke.m_strokeEnabled )
         {
             strokeEnabled = true;
-            strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255;
-            strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255;
-            strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255;
+            strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255.f;
+            strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255.f;
+            strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255.f;
             strokeSize   = textDefinition->m_stroke.m_strokeSize;
         }
-        
+    
         CCImage* pImage = new CCImage();
         do
         {
@@ -585,9 +585,9 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
                                                       eAlign,
                                                       textDefinition->m_fontName.c_str(),
                                                       textDefinition->m_fontSize,
-                                                      textDefinition->m_fontFillColor.r / 255,
-                                                      textDefinition->m_fontFillColor.g / 255,
-                                                      textDefinition->m_fontFillColor.b / 255,
+                                                      textDefinition->m_fontFillColor.r / 255.f,
+                                                      textDefinition->m_fontFillColor.g / 255.f,
+                                                      textDefinition->m_fontFillColor.b / 255.f,
                                                       shadowEnabled,
                                                       shadowDX,
                                                       shadowDY,
