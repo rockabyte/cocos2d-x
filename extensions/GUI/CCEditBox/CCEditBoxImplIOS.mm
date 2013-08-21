@@ -285,6 +285,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
         }
         
         m_systemControl = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
+        m_systemControl.textField.hidden = YES;
         if (!m_systemControl) break;
         
 		initInactiveLabels(size);
@@ -586,6 +587,8 @@ void CCEditBoxImplIOS::adjustTextFieldPosition()
 
 void CCEditBoxImplIOS::openKeyboard()
 {
+    this->adjustTextFieldPosition();
+    
 	m_pLabel->setVisible(false);
 	m_pLabelPlaceHolder->setVisible(false);
 
