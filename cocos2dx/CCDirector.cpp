@@ -65,6 +65,9 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
+#include <sys/sysctl.h>
+#import <mach/mach.h>
+#import <mach/mach_host.h>
 
 
 /**
@@ -814,7 +817,8 @@ void CCDirector::showStats(void)
                 m_uFrames = 0;
                 m_fAccumDt = 0;
                 
-                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+                // sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+                sprintf(m_pszFPS, "%.1f %.1f", m_fFrameRate, CCDirector::getAvailableMegaBytes());
                 m_pFPSLabel->setString(m_pszFPS);
                 
                 sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
@@ -1018,6 +1022,29 @@ void CCDirector::setAccelerometer(CCAccelerometer* pAccelerometer)
 CCAccelerometer* CCDirector::getAccelerometer()
 {
     return m_pAccelerometer;
+}
+
+double CCDirector::getAvailableBytes() {
+    vm_statistics_data_t vmStats;
+    mach_msg_type_number_t infoCount = HOST_VM_INFO_COUNT;
+    kern_return_t kernReturn = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmStats, &infoCount);
+    
+    if (kernReturn != KERN_SUCCESS)
+    {
+        return 0.0f;
+    }
+    
+    return (vm_page_size * vmStats.free_count);
+}
+
+double CCDirector::getAvailableKiloBytes()
+{
+    return CCDirector::getAvailableBytes() / 1024.0;
+}
+
+double CCDirector::getAvailableMegaBytes()
+{
+    return CCDirector::getAvailableKiloBytes() / 1024.0;
 }
 
 /***************************************************

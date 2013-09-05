@@ -354,7 +354,11 @@ protected:
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, unsigned int* length);
     
-    /** calculates delta time since last time it was called */    
+    static double getAvailableBytes();
+    static double getAvailableKiloBytes();
+    static double getAvailableMegaBytes();
+    
+    /** calculates delta time since last time it was called */
     void calculateDeltaTime();
 protected:
     /* The CCEGLView, where everything is rendered */
