@@ -65,9 +65,11 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
-#include <sys/sysctl.h>
-#import <mach/mach.h>
-#import <mach/mach_host.h>
+#if defined(CC_TARGET_OS_IPHONE)
+  #include <sys/sysctl.h>
+  #import <mach/mach.h>
+  #import <mach/mach_host.h>
+#endif
 
 
 /**
@@ -1025,6 +1027,7 @@ CCAccelerometer* CCDirector::getAccelerometer()
 }
 
 double CCDirector::getAvailableBytes() {
+#if defined(CC_TARGET_OS_IPHONE)
     vm_statistics_data_t vmStats;
     mach_msg_type_number_t infoCount = HOST_VM_INFO_COUNT;
     kern_return_t kernReturn = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmStats, &infoCount);
@@ -1035,6 +1038,9 @@ double CCDirector::getAvailableBytes() {
     }
     
     return (vm_page_size * vmStats.free_count);
+#else
+    return 0.0f;
+#endif
 }
 
 double CCDirector::getAvailableKiloBytes()
