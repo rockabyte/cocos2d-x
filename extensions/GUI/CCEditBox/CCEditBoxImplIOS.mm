@@ -30,10 +30,13 @@
 
 #include "CCEditBox.h"
 #import "EAGLView.h"
+#import "Defines.h"
+#import "ChatPopup.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
 static const int CC_EDIT_BOX_PADDING = 5;
+
 
 @implementation CustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -80,13 +83,45 @@ static const int CC_EDIT_BOX_PADDING = 5;
         textField_.returnKeyType = UIReturnKeyDefault;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
-        
-		
-        
         return self;
     }while(0);
     
     return nil;
+}
+
+-(void)addAccessoryView{
+    
+    UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, ChatPopupAcessoryViewHeight)];
+    [buttonsScroller setContentSize:CGSizeMake([UIScreen mainScreen].bounds.size.width*3.0f, 40.0f)];
+    
+    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight) ];
+    [button1 setTitle:@"All good" forState:UIControlStateNormal];
+    [button1 setTag:ChatButton1];
+    [button1 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button1 setBackgroundColor:[UIColor whiteColor]];
+    [buttonsScroller addSubview:button1];
+    
+    UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(ChatPopupAcessoryViewButtonMinWidth + ChatPopupAcessoryViewButtonSpacing, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight) ];
+    [button2 setTitle:@"__2__" forState:UIControlStateNormal];
+    [button2 setTag:ChatButton2];
+    [button2 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button2 setBackgroundColor:[UIColor whiteColor]];
+    [buttonsScroller addSubview:button2];
+
+    [buttonsScroller setBackgroundColor:[UIColor grayColor]];
+    [textField_ setInputAccessoryView:buttonsScroller];
+}
+
+
+-(void)buttonTapped:(id)sender{
+    UIButton *button = (UIButton*)sender;
+    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
+    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
+        ChatPopup *chatPopup = (ChatPopup*)popup;
+        chatPopup->chatButtonTapped(button.tag);
+    }
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
@@ -117,6 +152,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 -(void) openKeyboard
 {
     [[EAGLView sharedEGLView] addSubview:textField_];
+    
+    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
+    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
+        [self addAccessoryView];
+    }
     [textField_ becomeFirstResponder];
 }
 

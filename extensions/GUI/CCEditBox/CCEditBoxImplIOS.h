@@ -32,9 +32,11 @@
 
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
+#include "GameConfiguration.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "GameViewController.h"
 
 @interface CustomUITextField : UITextField
 {

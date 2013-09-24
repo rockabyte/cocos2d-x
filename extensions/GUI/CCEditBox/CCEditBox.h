@@ -158,7 +158,6 @@ public:
      * @param editBox The edit box object that generated the event.
      */
     virtual void editBoxReturn(CCEditBox* editBox) = 0;
-    
 };
 
 /**
