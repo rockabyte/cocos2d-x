@@ -28,6 +28,13 @@
 
 #define kLabelZOrder  9999
 
+#ifdef __APPPOKERMANIA__
+#define ChatPopupAcessoryViewButtonLabelPaddingPercentage 8.0f/100.0f
+#define ChatPopupAcessoryViewHeightScreenPercentage 8.0f/100.0f
+#define ChatPopupAcessoryViewButtonMinWidthScreenPercentage 25.0f/100.0f
+#define ChatPopupAcessoryViewButtonSpacingScreenPercentage 3.0f/100.0f
+#endif
+
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
@@ -88,25 +95,44 @@ static const int CC_EDIT_BOX_PADDING = 5;
 }
 
 -(void)addAccessoryView{
+#ifdef __APPPOKERMANIA__
     unsigned int buttonCount = ChatManager::sharedChatManager().getChatButtonCount();
-    float scrollWidth =  buttonCount * ChatPopupAcessoryViewButtonMinWidth + buttonCount * ChatPopupAcessoryViewButtonSpacing;
-    UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[UIScreen mainScreen].bounds.size.width, ChatPopupAcessoryViewHeight)];
-    [buttonsScroller setContentSize:CGSizeMake(scrollWidth, 40.0f)];
+    float screenWidth = [UIScreen mainScreen].bounds.size.width;
+    float screenHeight = [UIScreen mainScreen].bounds.size.height;
+//    float scrollWidth =  buttonCount * (screenWidth*ChatPopupAcessoryViewButtonMinWidthScreenPercentage) + buttonCount * (screenWidth*ChatPopupAcessoryViewButtonSpacingScreenPercentage);
+    float scrollHeight = screenHeight*ChatPopupAcessoryViewHeightScreenPercentage;
+    UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[UIScreen mainScreen].bounds.size.width, scrollHeight) ];
+    float minWidth = ChatPopupAcessoryViewButtonMinWidthScreenPercentage*screenWidth + ChatPopupAcessoryViewButtonLabelPaddingPercentage*screenWidth;
+   
 
-    for (unsigned int i = 0; i<ChatManager::sharedChatManager().getChatButtonCount(); i++) {
-        float posX = i*ChatPopupAcessoryViewButtonMinWidth + i*ChatPopupAcessoryViewButtonSpacing;
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(posX, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight - 20.0f) ];
+    float buttonOffsetX = 0.0f;
+    for (unsigned int i = 0; i<buttonCount; i++) {
+        float posX = buttonOffsetX + /*(i*screenWidth*ChatPopupAcessoryViewButtonMinWidthScreenPercentage)*/ + (i*screenWidth*ChatPopupAcessoryViewButtonSpacingScreenPercentage);
+        float buttonHeight = scrollHeight;//(screenWidth*ChatPopupAcessoryViewHeightScreenPercentage) - 20.0f;
+        float posY = scrollHeight*0.5f - buttonHeight*0.5f ;
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, screenWidth*ChatPopupAcessoryViewButtonMinWidthScreenPercentage, buttonHeight) ];
         std::string title = ChatManager::sharedChatManager().getChatMessageForChatButton(i);
         NSString *titleString = [NSString stringWithUTF8String: title.c_str() ];
         [button setTitle:titleString forState:UIControlStateNormal];
+        [button sizeToFit];
+        float widthMatchingLabelWidth = button.frame.size.width;
+        float newWidth = widthMatchingLabelWidth + ChatPopupAcessoryViewButtonLabelPaddingPercentage*screenWidth;
+        if ( widthMatchingLabelWidth < minWidth  ){
+            newWidth = minWidth;
+        }
+        [button setFrame:CGRectMake(button.frame.origin.x, button.frame.origin.y , newWidth, buttonHeight)];
+        buttonOffsetX += button.frame.size.width;
+        
         [button setTag:i];
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setBackgroundColor:[UIColor whiteColor]];
         [buttonsScroller addSubview:button];
     }
+    [buttonsScroller setContentSize:CGSizeMake(buttonOffsetX + (buttonCount-1)*(screenWidth*ChatPopupAcessoryViewButtonSpacingScreenPercentage), scrollHeight)];
     [buttonsScroller setBackgroundColor:[UIColor grayColor]];
     [textField_ setInputAccessoryView:buttonsScroller];
+#endif
 }
 
 
