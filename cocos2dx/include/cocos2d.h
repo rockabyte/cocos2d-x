@@ -35,6 +35,7 @@ THE SOFTWARE.
 // all cocos2d include files
 //
 #include "ccConfig.h"
+#include "gameConfig.h"
 
 // actions
 #include "actions/CCAction.h"

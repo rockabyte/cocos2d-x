@@ -30,8 +30,6 @@
 
 #include "CCEditBox.h"
 #import "EAGLView.h"
-#import "Defines.h"
-#import "ChatPopup.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
@@ -90,26 +88,23 @@ static const int CC_EDIT_BOX_PADDING = 5;
 }
 
 -(void)addAccessoryView{
-    
-    UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, ChatPopupAcessoryViewHeight)];
-    [buttonsScroller setContentSize:CGSizeMake([UIScreen mainScreen].bounds.size.width*3.0f, 40.0f)];
-    
-    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight) ];
-    [button1 setTitle:@"All good" forState:UIControlStateNormal];
-    [button1 setTag:ChatButton1];
-    [button1 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button1 setBackgroundColor:[UIColor whiteColor]];
-    [buttonsScroller addSubview:button1];
-    
-    UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(ChatPopupAcessoryViewButtonMinWidth + ChatPopupAcessoryViewButtonSpacing, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight) ];
-    [button2 setTitle:@"__2__" forState:UIControlStateNormal];
-    [button2 setTag:ChatButton2];
-    [button2 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button2 setBackgroundColor:[UIColor whiteColor]];
-    [buttonsScroller addSubview:button2];
+    unsigned int buttonCount = ChatManager::sharedChatManager().getChatButtonCount();
+    float scrollWidth =  buttonCount * ChatPopupAcessoryViewButtonMinWidth + buttonCount * ChatPopupAcessoryViewButtonSpacing;
+    UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[UIScreen mainScreen].bounds.size.width, ChatPopupAcessoryViewHeight)];
+    [buttonsScroller setContentSize:CGSizeMake(scrollWidth, 40.0f)];
 
+    for (unsigned int i = 0; i<ChatManager::sharedChatManager().getChatButtonCount(); i++) {
+        float posX = i*ChatPopupAcessoryViewButtonMinWidth + i*ChatPopupAcessoryViewButtonSpacing;
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(posX, 0.0f, ChatPopupAcessoryViewButtonMinWidth, ChatPopupAcessoryViewHeight - 20.0f) ];
+        std::string title = ChatManager::sharedChatManager().getChatMessageForChatButton(i);
+        NSString *titleString = [NSString stringWithUTF8String: title.c_str() ];
+        [button setTitle:titleString forState:UIControlStateNormal];
+        [button setTag:i];
+        [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor whiteColor]];
+        [buttonsScroller addSubview:button];
+    }
     [buttonsScroller setBackgroundColor:[UIColor grayColor]];
     [textField_ setInputAccessoryView:buttonsScroller];
 }
@@ -117,11 +112,13 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void)buttonTapped:(id)sender{
     UIButton *button = (UIButton*)sender;
+#ifdef __APPPOKERMANIA__
     PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
     if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
         ChatPopup *chatPopup = (ChatPopup*)popup;
         chatPopup->chatButtonTapped(button.tag);
     }
+#endif
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
@@ -152,11 +149,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
 -(void) openKeyboard
 {
     [[EAGLView sharedEGLView] addSubview:textField_];
-    
+#ifdef __APPPOKERMANIA__
     PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
-    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
-        [self addAccessoryView];
+    if ( popup ){
+        if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
+            [self addAccessoryView];
+        }
     }
+#endif
     [textField_ becomeFirstResponder];
 }
 

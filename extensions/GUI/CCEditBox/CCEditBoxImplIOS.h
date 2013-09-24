@@ -32,11 +32,17 @@
 
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
-#include "GameConfiguration.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "GameViewController.h"
+
+#ifdef __APPPOKERMANIA__
+#include "GameConfiguration.h"
+#include "ChatPopup.h"
+#include "ChatManager.h"
+#import "GameViewController.h" //obj-c
+#endif
+
 
 @interface CustomUITextField : UITextField
 {

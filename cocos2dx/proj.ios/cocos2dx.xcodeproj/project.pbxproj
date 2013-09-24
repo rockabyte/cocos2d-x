@@ -315,6 +315,7 @@
 		4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */; };
 		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
+		86F9A29E17F18A3E005FA5D8 /* gameConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 86F9A29D17F18A3E005FA5D8 /* gameConfig.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -630,6 +631,7 @@
 		4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
+		86F9A29D17F18A3E005FA5D8 /* gameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameConfig.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -805,6 +807,7 @@
 		1551A3E8158F2ADE00E66CFE /* include */ = {
 			isa = PBXGroup;
 			children = (
+				86F9A29D17F18A3E005FA5D8 /* gameConfig.h */,
 				1551A3E9158F2ADE00E66CFE /* ccConfig.h */,
 				1551A3EA158F2ADE00E66CFE /* CCEventType.h */,
 				1551A3EB158F2ADE00E66CFE /* ccMacros.h */,
@@ -1416,6 +1419,7 @@
 				1551A82D158F2ADF00E66CFE /* ccShaders.h in Headers */,
 				1551A82F158F2ADF00E66CFE /* CCAnimation.h in Headers */,
 				1551A831158F2ADF00E66CFE /* CCAnimationCache.h in Headers */,
+				86F9A29E17F18A3E005FA5D8 /* gameConfig.h in Headers */,
 				1551A833158F2ADF00E66CFE /* CCSprite.h in Headers */,
 				1551A835158F2ADF00E66CFE /* CCSpriteBatchNode.h in Headers */,
 				1551A837158F2ADF00E66CFE /* CCSpriteFrame.h in Headers */,
