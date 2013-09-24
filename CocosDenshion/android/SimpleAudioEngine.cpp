@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #define  I9100_MODEL "GT-I9100"
 #define  LOG_TAG     "Device Model"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,"%s",__VA_ARGS__)
 
 static bool s_bI9100 = false;
 
@@ -74,7 +74,7 @@ SimpleAudioEngine::SimpleAudioEngine()
 	
 	const char* deviceModel = methodInfo.env->GetStringUTFChars(jstr, NULL);
     
-	LOGD(deviceModel);
+//	LOGD(deviceModel);
     
 	if (strcmp(I9100_MODEL, deviceModel) == 0)
 	{
