@@ -139,11 +139,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 -(void)buttonTapped:(id)sender{
     UIButton *button = (UIButton*)sender;
 #ifdef __APPPOKERMANIA__
-    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
-    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
-        ChatPopup *chatPopup = (ChatPopup*)popup;
-        chatPopup->chatButtonTapped(button.tag);
-    }
+//    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
+//    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
+//        ChatPopup *chatPopup = (ChatPopup*)popup;
+//        chatPopup->chatButtonTapped(button.tag);
+//    }
 #endif
 }
 
@@ -176,12 +176,12 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     [[EAGLView sharedEGLView] addSubview:textField_];
 #ifdef __APPPOKERMANIA__
-    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
-    if ( popup ){
-        if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
-            [self addAccessoryView];
-        }
-    }
+//    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
+//    if ( popup ){
+//        if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
+//            [self addAccessoryView];
+//        }
+//    }
 #endif
     [textField_ becomeFirstResponder];
 }
