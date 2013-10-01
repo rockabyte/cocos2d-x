@@ -104,7 +104,7 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
 #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
 #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
-#define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) (cocos2d::SEL_CallFuncO)(&_SELECTOR)
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
