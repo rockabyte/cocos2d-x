@@ -99,7 +99,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     unsigned int buttonCount = ChatManager::sharedChatManager().getChatButtonCount();
     float screenWidth = [UIScreen mainScreen].bounds.size.width;
     float screenHeight = [UIScreen mainScreen].bounds.size.height;
-//    float scrollWidth =  buttonCount * (screenWidth*ChatPopupAcessoryViewButtonMinWidthScreenPercentage) + buttonCount * (screenWidth*ChatPopupAcessoryViewButtonSpacingScreenPercentage);
+    float scrollWidth =  buttonCount * (screenWidth*ChatPopupAcessoryViewButtonMinWidthScreenPercentage) + buttonCount * (screenWidth*ChatPopupAcessoryViewButtonSpacingScreenPercentage);
     float scrollHeight = screenHeight*ChatPopupAcessoryViewHeightScreenPercentage;
     UIScrollView *buttonsScroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[UIScreen mainScreen].bounds.size.width, scrollHeight) ];
     float minWidth = ChatPopupAcessoryViewButtonMinWidthScreenPercentage*screenWidth + ChatPopupAcessoryViewButtonLabelPaddingPercentage*screenWidth;
@@ -139,11 +139,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 -(void)buttonTapped:(id)sender{
     UIButton *button = (UIButton*)sender;
 #ifdef __APPPOKERMANIA__
-//    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
-//    if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
-//        ChatPopup *chatPopup = (ChatPopup*)popup;
-//        chatPopup->chatButtonTapped(button.tag);
-//    }
+    PokermaniaPopup *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getPopup(PokermaniaPopup::POPUP_Chat);
+    if ( popup != NULL ){
+        ChatPopup *chatPopup = (ChatPopup*)popup;
+        chatPopup->chatButtonTapped(button.tag);
+    }
 #endif
 }
 
@@ -176,12 +176,10 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     [[EAGLView sharedEGLView] addSubview:textField_];
 #ifdef __APPPOKERMANIA__
-//    PokermaniaScreen *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getCurrentPopup();
-//    if ( popup ){
-//        if ( dynamic_cast<ChatPopup*>(popup) != NULL ){
-//            [self addAccessoryView];
-//        }
-//    }
+    PokermaniaPopup *popup = Pokermania::GameConfiguration::sharedGameConfiguration().getPopup(PokermaniaPopup::POPUP_Chat);
+    if ( popup ){
+        [self addAccessoryView];
+    }
 #endif
     [textField_ becomeFirstResponder];
 }
