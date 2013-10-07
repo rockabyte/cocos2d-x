@@ -158,13 +158,8 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 
 		final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 
-		this.mTextViewTitle = new TextView(this.getContext());
-		final LinearLayout.LayoutParams textviewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		textviewParams.leftMargin = textviewParams.rightMargin = this.convertDipsToPixels(10);
-		this.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-		layout.addView(this.mTextViewTitle, textviewParams);
-
 		this.mInputEditText = new EditText(this.getContext());
+		this.mInputEditText.setHint(this.mTitle);
 		final LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		editTextParams.leftMargin = editTextParams.rightMargin = this.convertDipsToPixels(10);
 
@@ -203,16 +198,13 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 			case kEditBoxInputModeSingleLine:
 				this.mInputModeContraints = InputType.TYPE_CLASS_TEXT;
 				break;
-			default:
-
+			default:	
 				break;
 		}
 
 		if (this.mIsMultiline) {
 			this.mInputModeContraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
 		}
-
-		this.mInputEditText.setInputType(this.mInputModeContraints | this.mInputFlagConstraints);
 
 		switch (this.mInputFlag) {
 			case kEditBoxInputFlagPassword:
@@ -233,8 +225,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 			default:
 				break;
 		}
-
-		this.mInputEditText.setInputType(this.mInputFlagConstraints | this.mInputModeContraints);
+		this.mInputEditText.setInputType(this.mInputFlagConstraints | this.mInputFlagConstraints);
 
 		switch (this.mReturnType) {
 			case kKeyboardReturnTypeDefault:
