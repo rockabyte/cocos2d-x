@@ -118,7 +118,6 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 	// ===========================================================
 
 	private EditText mInputEditText;
-	private TextView mTextViewTitle;
 
 	private final String mTitle;
 	private final String mMessage;
@@ -169,7 +168,6 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		this.mTextViewTitle.setText(this.mTitle);
 		this.mInputEditText.setText(this.mMessage);
 
 		int oldImeOptions = this.mInputEditText.getImeOptions();
