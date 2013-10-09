@@ -26,15 +26,17 @@ package org.cocos2dx.lib;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -212,10 +214,10 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 				this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
 				break;
 			case kEditBoxInputFlagInitialCapsWord:
-				this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_WORDS;
+				this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 				break;
 			case kEditBoxInputFlagInitialCapsSentence:
-				this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
+				this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
 				break;
 			case kEditBoxInputFlagInitialCapsAllCharacters:
 				this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
@@ -223,7 +225,8 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 			default:
 				break;
 		}
-		this.mInputEditText.setInputType(this.mInputFlagConstraints | this.mInputFlagConstraints);
+		
+		this.mInputEditText.setInputType(this.mInputFlagConstraints | this.mInputModeContraints);
 
 		switch (this.mReturnType) {
 			case kKeyboardReturnTypeDefault:
@@ -257,6 +260,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 				Cocos2dxEditBoxDialog.this.mInputEditText.requestFocus();
 				Cocos2dxEditBoxDialog.this.mInputEditText.setSelection(Cocos2dxEditBoxDialog.this.mInputEditText.length());
 				Cocos2dxEditBoxDialog.this.openKeyboard();
+				Cocos2dxEditBoxDialog.this.listenForKeyboardClose();
 			}
 		}, 200);
 
@@ -265,9 +269,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 			public boolean onEditorAction(final TextView v, final int actionId, final KeyEvent event) {
 				/* If user didn't set keyboard type, this callback will be invoked twice with 'KeyEvent.ACTION_DOWN' and 'KeyEvent.ACTION_UP'. */
 				if (actionId != EditorInfo.IME_NULL || (actionId == EditorInfo.IME_NULL && event != null && event.getAction() == KeyEvent.ACTION_DOWN)) {
-					Cocos2dxHelper.setEditTextDialogResult(Cocos2dxEditBoxDialog.this.mInputEditText.getText().toString());
-					Cocos2dxEditBoxDialog.this.closeKeyboard();
-					Cocos2dxEditBoxDialog.this.dismiss();
+					finishDialog();
 					return true;
 				}
 				return false;
@@ -302,6 +304,47 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		final InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(this.mInputEditText.getWindowToken(), 0);
 	}
+	
+	private void finishDialog(){
+		Cocos2dxHelper.setEditTextDialogResult(Cocos2dxEditBoxDialog.this.mInputEditText.getText().toString());
+		Cocos2dxEditBoxDialog.this.closeKeyboard();
+		Cocos2dxEditBoxDialog.this.dismiss();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finishDialog();
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) 
+	{
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			finishDialog();
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+	
+	public void listenForKeyboardClose(){
+		final View view = (View)findViewById(android.R.id.content);
+		view.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                //r will be populated with the coordinates of the view area still visible
+                view.getWindowVisibleDisplayFrame(r);
+                
+
+                int screenHeight = view.getRootView().getHeight();
+                final int heightDiff = screenHeight - (r.bottom - r.top);
+                if(heightDiff == 0){
+                	finishDialog();
+                	return;
+                }
+            }
+        });
+    }
 
 	// ===========================================================
 	// Inner and Anonymous Classes
