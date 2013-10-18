@@ -135,11 +135,4 @@ TargetPlatform CCApplication::getTargetPlatform()
     }
 }
 
-void CCApplication::openURL(const char* pszUrl)
-{
-    NSString *msg = [NSString stringWithCString:pszUrl encoding:NSASCIIStringEncoding];
-    NSURL *nsUrl = [NSURL URLWithString:msg];
-    [[UIApplication sharedApplication] openURL:nsUrl];
-}
-
 NS_CC_END
