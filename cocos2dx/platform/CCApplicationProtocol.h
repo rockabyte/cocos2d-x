@@ -91,6 +91,9 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform() = 0;
+    
+    virtual void openURL(const char* pszUrl) = 0;
+
 };
 
 // end of platform group
