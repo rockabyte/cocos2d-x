@@ -58,7 +58,7 @@
     BOOL editState_;
 }
 
-@property(nonatomic, retain) UITextField* textField;
+@property(nonatomic, strong) UITextField* textField;
 @property(nonatomic, readonly, getter = isEditState) BOOL editState;
 @property(nonatomic, assign) void* editBox;
 

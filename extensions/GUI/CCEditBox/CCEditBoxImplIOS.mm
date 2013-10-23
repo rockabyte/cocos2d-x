@@ -65,8 +65,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     [textField_ resignFirstResponder];
     [textField_ removeFromSuperview];
-    self.textField = NULL;
-    [super dealloc];
 }
 
 -(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox
@@ -77,7 +75,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         if (self == nil) break;
         editState_ = NO;
-        self.textField = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        self.textField = [[CustomUITextField alloc] initWithFrame: frameRect];
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
@@ -323,7 +321,6 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
 {
-    [m_systemControl release];
 }
 
 void CCEditBoxImplIOS::doAnimationWhenKeyboardMove(float duration, float distance)
