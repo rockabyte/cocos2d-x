@@ -48,6 +48,17 @@ GUI/CCScrollView/CCTableViewCell.cpp \
 GUI/CCScrollView/CCSorting.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
+GUI/RichControls/CCHTMLLabel.cpp \
+GUI/RichControls/CCRichAtlas.cpp \
+GUI/RichControls/CCRichCache.cpp \
+GUI/RichControls/CCRichCompositor.cpp \
+GUI/RichControls/CCRichElement.cpp \
+GUI/RichControls/CCRichNode.cpp \
+GUI/RichControls/CCRichOverlay.cpp \
+GUI/RichControls/CCRichParser.cpp \
+GUI/RichControls/dfont/dfont_manager.cpp \
+GUI/RichControls/dfont/dfont_render.cpp \
+GUI/RichControls/dfont/dfont_utility.cpp \
 network/HttpClient.cpp \
 network/WebSocket.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
@@ -146,13 +157,17 @@ LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Freetype2/include
+
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
                            $(LOCAL_PATH)/GUI/CCScrollView \
+                           $(LOCAL_PATH)/GUI/RichControls \
+                           $(LOCAL_PATH)/GUI/RichControls/dfont \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-						               $(LOCAL_PATH)/CocoStudio/Armature
+						   $(LOCAL_PATH)/CocoStudio/Armature
 
 LOCAL_CFLAGS := -fexceptions
                     
