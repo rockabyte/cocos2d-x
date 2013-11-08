@@ -54,8 +54,12 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 	std::vector<short> line_widths;
 
 	RRect zone = compositor->getMetricsState()->zone;
+    zone.size.h *= CC_CONTENT_SCALE_FACTOR();
+    zone.size.w *= CC_CONTENT_SCALE_FACTOR();
+    
 	bool wrapline = m_rWrapLine;
-
+    bool wordwrap = true;
+    
 	// line width auto growth
 	if ( zone.size.w == 0 )
 		wrapline = false;
@@ -96,13 +100,35 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 		rect.pos.y += baseline_correct;
 		temp_linerect.extend(rect);
 
+        bool bForceLinebreak = false;
+        if (wordwrap) {
+            if ((*it)->getCharcode() == 32) {
+                // read ahead for next word if it fits
+                int wordSize = 0;
+                for ( element_list_t::iterator rait = it + 1; rait != line->end(); rait++ )
+                {
+                    if ((*rait)->getCharcode() == 32) {
+                        // no wordwrap, as there is another space ahead ;)
+                        break;
+                    }
+                    
+                    wordSize += ((*rait)->getMetrics()->advance.x);
+                    if (pen.x + wordSize + getPadding()*2 > zone.max_x()) {
+                        bForceLinebreak = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
 		// process wrapline
 		element_list_t::iterator next_it = it + 1;
 		if ( next_it == line->end() ||	// last element
 			(*next_it)->isNewlineBefore() || // line-break before next element
 			(*it)->isNewlineFollow() ||	// line-break after this element
+            bForceLinebreak || 
 			( wrapline && pen.x != 0		// wrap line
-			&& pen.x + metrics->advance.x + (*next_it)->getMetrics()->rect.pos.x + (*next_it)->getMetrics()->rect.size.w + getPadding()*2 > zone.size.w 
+			&& pen.x + metrics->rect.size.w + (*next_it)->getMetrics()->rect.pos.x + (*next_it)->getMetrics()->rect.size.w + getPadding()*2 > zone.max_x()
 			&& (*next_it)->canLinewrap() ) )
 		{
 			// correct out of bound correct

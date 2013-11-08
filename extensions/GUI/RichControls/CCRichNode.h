@@ -83,6 +83,7 @@ public:
 	virtual void setDefaultSpacing(short spacing);
 	virtual short getDefaultPadding();
 	virtual void setDefaultPadding(short padding);
+	virtual float getContentScaleFactor();
 
 	virtual bool initialize() = 0;
 

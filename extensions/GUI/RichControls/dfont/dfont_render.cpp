@@ -532,7 +532,7 @@ FontInfo* FontInfo::create_font(FT_Library library, const char* fontname, FT_Lon
 	if ( library )
 	{
 		FontInfo* f = new FontInfo(library);
-		if ( 0 == f->init(library, fontname, face_idx, width_pt, height_pt, ppi) )
+		if ( 0 == f->init(library, fontname, face_idx, width_pt, height_pt, 350) )
 		{
 			return f;
 		}

@@ -73,6 +73,7 @@ public:
 	virtual void setLocalPositionY(short y) { m_rPos.y = y; }
 	virtual RPos getGlobalPosition() { return m_rGlobalPos; }
 	
+    virtual unsigned char getCharcode() { return 0; }
 	virtual RMetrics* getMetrics() { return &m_rMetrics; }
 	
 	virtual RTexture* getTexture() { return &m_rTexture; }
@@ -191,6 +192,7 @@ public:
 	virtual bool canLinewrap() { return true; }
 	virtual short getBaseline() { return m_rMetrics.rect.min_y(); }
 	virtual const char* getFontAlias() { return m_font_alias.c_str(); }
+    virtual unsigned char getCharcode() { return m_charcode; }
 
 	REleGlyph(unsigned int charcode);
 	virtual ~REleGlyph();

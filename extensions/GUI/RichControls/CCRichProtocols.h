@@ -260,6 +260,7 @@ public:
 
 	virtual RPos getGlobalPosition() = 0;		// global position	
 	
+	virtual unsigned char getCharcode() = 0;    // char code
 	virtual RMetrics* getMetrics() = 0;		// element metrics
 	virtual bool scaleToElementSize() = 0;  // if texture is scale to element size
 

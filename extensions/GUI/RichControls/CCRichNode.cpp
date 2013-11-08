@@ -145,6 +145,11 @@ void CCRichNode::setDefaultPadding(short padding)
 	}
 }
 
+float CCRichNode::getContentScaleFactor()
+{
+	return CCDirector::sharedDirector()->getContentScaleFactor();
+}
+
 void CCRichNode::setStringUTF8(const char* utf8_str)
 {
 	m_rRichString = utf8_str;
