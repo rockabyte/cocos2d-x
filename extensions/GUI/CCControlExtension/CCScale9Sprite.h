@@ -318,6 +318,7 @@ public:
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
+    virtual CCTexture2D *getTexture2D();
     
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);

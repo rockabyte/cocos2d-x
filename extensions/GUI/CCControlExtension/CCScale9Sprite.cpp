@@ -757,6 +757,10 @@ void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
     this->m_insetBottom = 0;
 }
 
+CCTexture2D* CCScale9Sprite::getTexture2D(){
+    return this->_scale9Image->getTexture();
+}
+
 float CCScale9Sprite::getInsetLeft()
 {
     return this->m_insetLeft;
