@@ -15,8 +15,14 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
-        CCApplication::sharedApplication()->applicationDidEnterBackground();
-
+    	// Grund für die Änderung (auf Basis von http://www.cocos2d-x.org/forums/6/topics/33956)
+    	//   Startet man die Application bei abgeschaltetem Screen, wird keine CCApplication erstellt,
+    	//   da Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit nicht aufgerufen wird.
+    	//   Diese wird durch Cocos2dxRenderer.onSurfaceCreated gecalled
+    	
+        if (CCApplication::sharedApplication()) {
+        	CCApplication::sharedApplication()->applicationDidEnterBackground();
+        }
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
