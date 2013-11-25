@@ -15,6 +15,7 @@
 #include "CCParticleSystemQuadLoader.h"
 #include "CCScrollViewLoader.h"
 
+#include <stdexcept>
 
 
 NS_CC_EXT_BEGIN
@@ -64,7 +65,9 @@ void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
 
 CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(const char* pClassName) {
     CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
-    assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
+    if (ccNodeLoadersIterator == this->mCCNodeLoaders.end()){
+        throw std::logic_error("...ccbreader node loading failure");
+    }
     return ccNodeLoadersIterator->second;
 }
 
