@@ -88,6 +88,11 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 		// first element
 		if ( pen.x == 0 )
 		{
+            // do not render trailing spaces
+            if ((*it)->getCharcode() == 32) {
+                continue;
+            }
+            
 			pen.x -= metrics->rect.min_x();
 		}
 		
@@ -104,7 +109,7 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
         if (wordwrap) {
             if ((*it)->getCharcode() == 32) {
                 // read ahead for next word if it fits
-                int wordSize = 0;
+                int wordSize = (*it)->getMetrics()->advance.x;
                 for ( element_list_t::iterator rait = it + 1; rait != line->end(); rait++ )
                 {
                     if ((*rait)->getCharcode() == 32) {
