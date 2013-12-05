@@ -503,6 +503,9 @@ void CCEditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
         case kEditBoxInputFlagInitialCapsAllCharacters:
             m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
+        case kEditBoxInputFlagInitialCapsNone:
+            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            break;
         case kEditBoxInputFlagSensitive:
             m_systemControl.textField.autocorrectionType = UITextAutocorrectionTypeNo;
             break;

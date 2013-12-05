@@ -109,6 +109,8 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 	 */
 	private final int kEditBoxInputFlagInitialCapsAllCharacters = 4;
 
+	private final int kEditBoxInputFlagInitialCapsNone = 5;
+
 	private final int kKeyboardReturnTypeDefault = 0;
 	private final int kKeyboardReturnTypeDone = 1;
 	private final int kKeyboardReturnTypeSend = 2;
@@ -221,6 +223,9 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 				break;
 			case kEditBoxInputFlagInitialCapsAllCharacters:
 				this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+				break;
+			case kEditBoxInputFlagInitialCapsNone:
+				this.mInputFlagConstraints = this.mInputFlagConstraints & ~(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS | InputType.TYPE_TEXT_FLAG_CAP_WORDS | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 				break;
 			default:
 				break;

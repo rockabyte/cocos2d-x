@@ -119,8 +119,9 @@ enum EditBoxInputFlag
     /**
      * Capitalize all characters automatically.
      */
-    kEditBoxInputFlagInitialCapsAllCharacters
+    kEditBoxInputFlagInitialCapsAllCharacters,
 
+    kEditBoxInputFlagInitialCapsNone
 };
 
 
