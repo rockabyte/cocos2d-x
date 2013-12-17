@@ -101,6 +101,7 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 		(*it)->setLocalPositionY(pen.y + baseline_correct);
 
 		RRect rect = metrics->rect;
+        rect.size.h = MAX(rect.size.h, compositor->getFont()->char_height() / CC_CONTENT_SCALE_FACTOR());
 		rect.pos.x += pen.x;
 		rect.pos.y += baseline_correct;
 		temp_linerect.extend(rect);
@@ -112,6 +113,10 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
                 int wordSize = (*it)->getMetrics()->advance.x;
                 for ( element_list_t::iterator rait = it + 1; rait != line->end(); rait++ )
                 {
+                    if ((*rait)->isNewlineFollow()) {
+                        break;
+                    }
+                    
                     if ((*rait)->getCharcode() == 32) {
                         // no wordwrap, as there is another space ahead ;)
                         break;
