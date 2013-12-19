@@ -50,6 +50,7 @@ CCScrollView::CCScrollView()
 , m_pContainer(NULL)
 , m_bTouchMoved(false)
 , m_bBounceable(false)
+, m_bBottomAligned(false)
 , m_bClippingToBounds(false)
 , m_fTouchLength(0.0f)
 , m_pTouches(NULL)
@@ -346,6 +347,10 @@ void CCScrollView::relocateContainer(bool animated)
     {
         newY     = MIN(newY, max.y);
         newY     = MAX(newY, min.y);
+    }
+    
+    if (m_bBottomAligned) {
+        newY = MIN(newY, 0.0f);
     }
 
     if (newY != oldPoint.y || newX != oldPoint.x)

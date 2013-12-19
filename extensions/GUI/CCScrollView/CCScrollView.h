@@ -169,6 +169,8 @@ public:
     bool isTouchMoved() { return m_bTouchMoved; }
     bool isBounceable() { return m_bBounceable; }
     void setBounceable(bool bBounceable) { m_bBounceable = bBounceable; }
+    bool isBottomAligned() { return m_bBottomAligned; }
+    void setBottomAligned(bool bBottomAligned) { m_bBottomAligned = bBottomAligned; }
 
     /**
      * size to clip. CCNode boundingBox uses contentSize directly.
@@ -335,6 +337,12 @@ protected:
      */
     CCRect m_tParentScissorRect;
     bool m_bScissorRestored;
+    
+    /**
+     * Determiens whether scroll view is bottom aligned.
+     */
+    bool m_bBottomAligned;
+    
 public:
     enum ScrollViewScriptEventType
     {
