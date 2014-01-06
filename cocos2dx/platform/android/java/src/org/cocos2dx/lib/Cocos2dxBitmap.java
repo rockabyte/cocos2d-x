@@ -128,7 +128,7 @@ public class Cocos2dxBitmap {
 		
 		if ( shadow ) {
 
-			int shadowColor = 0xff7d7d7d;
+			int shadowColor = 0x55000000;
 			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 	
 			bitmapPaddingX = Math.abs(shadowDX);
