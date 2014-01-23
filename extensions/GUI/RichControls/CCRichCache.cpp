@@ -101,7 +101,7 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 		(*it)->setLocalPositionY(pen.y + baseline_correct);
 
 		RRect rect = metrics->rect;
-        rect.size.h = 1.05f * MAX(rect.size.h, compositor->getFont()->char_height() / CC_CONTENT_SCALE_FACTOR());
+        rect.size.h = MAX(rect.size.h, compositor->getFont()->char_height() / CC_CONTENT_SCALE_FACTOR());
 		rect.pos.x += pen.x;
 		rect.pos.y += baseline_correct;
 		temp_linerect.extend(rect);
