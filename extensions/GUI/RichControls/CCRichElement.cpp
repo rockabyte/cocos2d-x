@@ -416,7 +416,7 @@ void REleGlyph::onCompositStart(class IRichCompositor* compositor)
 		m_rMetrics.rect.pos = RPos((short)m_slot->metrics.left, (short)m_slot->metrics.top);
 		m_rMetrics.rect.size = RSize((short)m_slot->metrics.width, (short)m_slot->metrics.height);
 		m_rMetrics.advance.x = m_slot->metrics.advance_x;
-		m_rMetrics.advance.y = 0;//m_slot->metrics.advance_y;
+		m_rMetrics.advance.y = m_slot->metrics.advance_y;
 
 		m_rTexture.setTexture(m_slot->texture->user_texture<CCTexture2D>());
 		m_rTexture.rect.pos = RPos((short)m_slot->padding_rect.origin_x, (short)m_slot->padding_rect.origin_y);
