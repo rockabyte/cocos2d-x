@@ -101,7 +101,6 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 		(*it)->setLocalPositionY(pen.y + baseline_correct);
 
 		RRect rect = metrics->rect;
-        rect.size.h = MAX(rect.size.h, compositor->getFont()->char_height() / CC_CONTENT_SCALE_FACTOR());
 		rect.pos.x += pen.x;
 		rect.pos.y += baseline_correct;
 		temp_linerect.extend(rect);
@@ -141,6 +140,7 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 			&& pen.x + metrics->rect.size.w + (*next_it)->getMetrics()->rect.pos.x + (*next_it)->getMetrics()->rect.size.w + getPadding()*2 > zone.max_x()
 			&& (*next_it)->canLinewrap() ) )
 		{
+            bool textLineBreak = next_it == line->end() || (!(*it)->isNewlineFollow());
 			// correct out of bound correct
 			short y2correct = -temp_linerect.max_y();
 
@@ -154,7 +154,11 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 			temp_linerect.pos.y = pen.y;
 			line_rect.extend(temp_linerect);
 
-			pen.y -= (temp_linerect.size.h + getSpacing());
+            if (textLineBreak) {
+                pen.y -= (compositor->getFont()->char_height() * 1.618f);
+            } else {
+                pen.y -= (MAX(temp_linerect.size.h, compositor->getFont()->char_height() * 1.618f) + getSpacing());
+            }
 			pen.x = 0;
 
 			// push next line start
