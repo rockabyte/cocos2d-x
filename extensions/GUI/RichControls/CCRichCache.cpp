@@ -54,8 +54,8 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 	std::vector<short> line_widths;
 
 	RRect zone = compositor->getMetricsState()->zone;
-    zone.size.h *= CC_CONTENT_SCALE_FACTOR();
-    zone.size.w *= CC_CONTENT_SCALE_FACTOR();
+    zone.size.h = (int) (zone.size.h * CC_CONTENT_SCALE_FACTOR() );
+    zone.size.w = (int) (zone.size.w * CC_CONTENT_SCALE_FACTOR();
     
 	bool wrapline = m_rWrapLine;
     bool wordwrap = true;
@@ -154,10 +154,13 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 			temp_linerect.pos.y = pen.y;
 			line_rect.extend(temp_linerect);
 
+            float linespaceFactor = 1.618; // goldener Schnitt
+            
+            linespaceFactor = 1.65;
             if (textLineBreak) {
-                pen.y -= (compositor->getFont()->char_height() * 1.618f);
+                pen.y -= (compositor->getFont()->char_height() * linespaceFactor);
             } else {
-                pen.y -= (MAX(temp_linerect.size.h, compositor->getFont()->char_height() * 1.618f) + getSpacing());
+                pen.y -= (MAX(temp_linerect.size.h, compositor->getFont()->char_height() * linespaceFactor) + getSpacing());
             }
 			pen.x = 0;
 
