@@ -55,7 +55,7 @@ RRect RLineCache::flush(class IRichCompositor* compositor)
 
 	RRect zone = compositor->getMetricsState()->zone;
     zone.size.h = (int) (zone.size.h * CC_CONTENT_SCALE_FACTOR() );
-    zone.size.w = (int) (zone.size.w * CC_CONTENT_SCALE_FACTOR();
+    zone.size.w = (int) (zone.size.w * CC_CONTENT_SCALE_FACTOR() );
     
 	bool wrapline = m_rWrapLine;
     bool wordwrap = true;
