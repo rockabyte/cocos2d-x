@@ -144,11 +144,11 @@ public:
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
-    CCPoint minContainerOffset();
+    virtual CCPoint minContainerOffset();
     /**
      * Returns the current container's maximum offset. You may want this while you animate scrolling by yourself
      */
-    CCPoint maxContainerOffset(); 
+    virtual CCPoint maxContainerOffset(); 
     /**
      * Determines if a given node's bounding box is in visible bounds
      *
@@ -164,7 +164,9 @@ public:
      */
     void resume(CCObject* sender);
 
-
+    
+    void setScrollOffsets(const CCPoint& offsets) { m_ScrollOffsets = offsets; }
+    
     bool isDragging() {return m_bDragging;}
     bool isTouchMoved() { return m_bTouchMoved; }
     bool isBounceable() { return m_bBounceable; }
@@ -282,7 +284,12 @@ protected:
      * Content offset. Note that left-bottom point is the origin
      */
     CCPoint m_tContentOffset;
-
+    
+    /**
+     * Scroll offset.
+     */
+    CCPoint m_ScrollOffsets;
+    
     /**
      * Container holds scroll view contents, Sets the scrollable container object of the scroll view
      */

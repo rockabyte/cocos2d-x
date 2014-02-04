@@ -124,6 +124,9 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         this->addChild(m_pContainer);
         m_fMinScale = m_fMaxScale = 1.0f;
         m_mapScriptHandler.clear();
+        
+        this->setScrollOffsets(ccp(0.0f,0.0f));
+        
         return true;
     }
     return false;
@@ -361,13 +364,13 @@ void CCScrollView::relocateContainer(bool animated)
 
 CCPoint CCScrollView::maxContainerOffset()
 {
-    return ccp(0.0f, 0.0f);
+    return ccp(0.0f + m_ScrollOffsets.x, 0.0f + m_ScrollOffsets.y);
 }
 
 CCPoint CCScrollView::minContainerOffset()
 {
-    return ccp(m_tViewSize.width - m_pContainer->getContentSize().width*m_pContainer->getScaleX(), 
-               m_tViewSize.height - m_pContainer->getContentSize().height*m_pContainer->getScaleY());
+    return ccp(m_tViewSize.width - m_pContainer->getContentSize().width*m_pContainer->getScaleX() - m_ScrollOffsets.x,
+               m_tViewSize.height - m_pContainer->getContentSize().height*m_pContainer->getScaleY() - m_ScrollOffsets.y);
 }
 
 void CCScrollView::deaccelerateScrolling(float dt)
