@@ -294,7 +294,7 @@ CCRichAtlas* CCRichNode::findColoredTextureAtlas(CCTexture2D* texture, unsigned 
 {
 	if ( texture == NULL || color_rgba == 0 )
 	{
-		return false;
+		return NULL;
 	}
 
 	atlas_map_t* atlas_map = NULL;

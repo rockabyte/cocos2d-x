@@ -496,18 +496,18 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
         CCTableViewCell* pCell = (CCTableViewCell*)pObj;
-        CCLog("cells Used index %d, value = %d", i, pCell->getIdx());
+        CCLOG("cells Used index %d, value = %d", i, pCell->getIdx());
         i++;
     }
-    CCLog("---------------------------------------");
+    CCLOG("---------------------------------------");
     i = 0;
     CCARRAY_FOREACH(m_pCellsFreed, pObj)
     {
         CCTableViewCell* pCell = (CCTableViewCell*)pObj;
-        CCLog("cells freed index %d, value = %d", i, pCell->getIdx());
+        CCLOG("cells freed index %d, value = %d", i, pCell->getIdx());
         i++;
     }
-    CCLog("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    CCLOG("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 #endif
 
     if (m_pCellsUsed->count() > 0)
